@@ -3,6 +3,7 @@ import time
 import statistics
 import math
 import plotext as plt
+from rich import print
 
 def readTimestamps():
     with open('camera.log', 'r') as f1:
@@ -85,15 +86,15 @@ while True:
         plt.plot_size(200, 15)
         plt.subplots(1, 3)
         plt.cld()
-        plt.subplot(1,1).hist(differences, 50, label="mean 0")
+        plt.subplot(1,1).hist(differences, 50)
         plt.subplot(1,1).title("Timestamp difference Camera and LIDAR")
         plt.subplot(1,1).ylabel("Frequency")
         plt.subplot(1,1).xlabel("Time Difference (us)")
-        plt.subplot(1,2).hist(camera_differences, 100, label="mean 0")
+        plt.subplot(1,2).hist(camera_differences, 50)
         plt.subplot(1,2).title("Timestamp difference 100ms and Camera")
         plt.subplot(1,2).ylabel("Frequency")
         plt.subplot(1,2).xlabel("Time Difference (us)")
-        plt.subplot(1,3).hist(lidar_differences, 100, label="mean 0")
+        plt.subplot(1,3).hist(lidar_differences, 50)
         plt.subplot(1,3).title("Timestamp difference 100ms and LIDAR")
         plt.subplot(1,3).ylabel("Frequency")
         plt.subplot(1,3).xlabel("Time Difference (us)")
@@ -101,6 +102,8 @@ while True:
 
     os.system('clear')
 
+    print()
+    print("[bold underline red]Lidar Camera Synchronization Demo[/bold underline red]")
     print()
     print(f"Total timestamps:    {total_timestamps}   {' ' * round(terminal_size[0] / 3 - 34)}Unmached timestamps: {unmached_timestamps}   {' ' * round(terminal_size[0] / 3 - 34)}Percentage matched:  {percentage_matched} %")
     print()
