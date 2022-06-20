@@ -24,6 +24,7 @@ while True:
 
     for key in timestamps.keys():
         if None in timestamps[key]:
+            total -= 1
             if found_start:
                 unmached += 1
         else:
@@ -33,7 +34,11 @@ while True:
 
     for key in timestamps.keys():
         if not None in timestamps[key]:
-            differences.append(abs(timestamps[key][0] - timestamps[key][1]))
+            differences.append(timestamps[key][0] - timestamps[key][1])
+    
+    with open("differences.txt", "w") as f:
+        for difference in differences:
+            f.write(str(difference) + "\n")
 
     total_timestamps = str(total).rjust(10)
     unmached_timestamps = str(unmached).rjust(10)
