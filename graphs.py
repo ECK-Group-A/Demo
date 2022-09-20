@@ -9,7 +9,9 @@ def readTimestamps():
     with open('camera.log', 'r') as f1:
         with open('lidar.log', 'r') as f2:
             timestamps1 = {round((int(t.strip()) / 100000000) % 36000): round((int(t.strip()) / 1000) % 3600000000) for t in f1}
+            print(timestamps1)
             timestamps2 = {round(int(t.strip()) / 100000): int(t.strip()) for t in f2}
+            print(timestamps2)
 
             keys = list(set(list(timestamps1.keys()) + list(timestamps2.keys())))
 
@@ -131,4 +133,4 @@ while True:
         print("Median error:                NA μs")
         print("Mean error:                  NA μs")
 
-    time.sleep(0.5)
+    time.sleep(10)

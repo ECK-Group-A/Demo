@@ -34,6 +34,7 @@ def exit_handler():
     buffer = BytesIO()
     rc = sensor_do(sensor, Base_URL+'reset', urlencode({'data':'reset_system'}), buffer)
     sensor.close()
+    port.stopListening()
 
 atexit.register(exit_handler)
     
@@ -52,15 +53,20 @@ class Echo(DatagramProtocol):
         time = ((data[0x04DD - 42] << 24) | (data[0x04DC - 42] << 16) | (data[0x04DB - 42] << 8) | data[0x04DA - 42])
         try:
             if self.old_angle > angle:
+                log = open("lidar.log", "a")
                 if 36000 - self.old_angle < angle:
+                    #this is the time in microseconds
                     print(f"{self.old_time}")
+                    log.write(str(time) + '\n')
                 else:
                     print(f"{time}")
+                    log.write(str(time) + '\n') 
+                log.close()
         except AttributeError:
             pass
 
         self.old_angle = angle
         self.old_time = time
 
-reactor.listenUDP(2368, Echo())
+port = reactor.listenUDP(2368, Echo())
 reactor.run()
