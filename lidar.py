@@ -17,7 +17,7 @@ from twisted.internet import reactor
 
 import atexit
 
-Base_URL = 'http://192.168.10.100/cgi/'
+Base_URL = 'http://196.254.40.70/cgi/'
 
 def sensor_do(s, url, pf, buf):
     s.setopt(s.URL, url)
